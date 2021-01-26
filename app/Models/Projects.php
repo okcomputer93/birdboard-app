@@ -10,4 +10,9 @@ class Projects extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'description'];
+
+    public function path()
+    {
+        return route('projects.show', $this);
+    }
 }

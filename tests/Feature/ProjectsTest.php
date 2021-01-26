@@ -24,7 +24,7 @@ class ProjectsTest extends TestCase
 
         $this->assertDatabaseHas('projects', $attributes);
 
-        $this->get('/projects')->assertSee($attributes['title'], $attributes['description']);
+        $this->get('/projects')->assertSee($attributes['title']);
     }
 
     /** @test */
@@ -44,6 +44,14 @@ class ProjectsTest extends TestCase
         ]);
         $this->post('/projects', $attributes)->assertSessionHasErrors();
     }
+
+    /** @test */
+    public function a_user_can_view_a_project()
+    {
+        $project = Projects::factory()->create();
+        $this->get($project->path())->assertSee($project->title)->assertSee($project->description);
+    }
+
 
 
 
