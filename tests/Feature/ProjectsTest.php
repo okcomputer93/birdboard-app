@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Projects;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,6 +16,7 @@ class ProjectsTest extends TestCase
     public function an_user_can_create_a_project()
     {
         $this->withoutExceptionHandling();
+        $this->actingAs(User::factory()->create());
         $attributes = [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph
@@ -28,8 +30,18 @@ class ProjectsTest extends TestCase
     }
 
     /** @test */
+    public function an_user_can_view_a_project()
+    {
+        $this->actingAs(User::factory()->create());
+        $project = Projects::factory()->create();
+        $this->get($project->path())->assertSee($project->title)->assertSee($project->description);
+    }
+
+
+    /** @test */
     public function a_project_requires_a_title()
     {
+        $this->actingAs(User::factory()->create());
         $attributes = Projects::factory()->raw([
             'title' => ''
         ]);
@@ -39,18 +51,23 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_description()
     {
+        $this->actingAs(User::factory()->create());
         $attributes = Projects::factory()->raw([
             'description' => ''
         ]);
-        $this->post('/projects', $attributes)->assertSessionHasErrors();
+        $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
 
     /** @test */
-    public function a_user_can_view_a_project()
+    public function only_authenticated_users_can_create_projects()
     {
-        $project = Projects::factory()->create();
-        $this->get($project->path())->assertSee($project->title)->assertSee($project->description);
+//        $this->withoutExceptionHandling();
+        $attributes = Projects::factory()->raw([
+            'owner_id' => null
+        ]);
+        $this->post('/projects', $attributes)->assertRedirect('login');
     }
+
 
 
 
