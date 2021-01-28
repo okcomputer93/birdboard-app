@@ -9,7 +9,9 @@ class ProjectsController extends Controller
 {
     public function index()
     {
-        $projects = Projects::all();
+//        $projects = Projects::all();
+        $projects = auth()->user()->projects;
+
         return view('projects.index', compact('projects'));
 
     }
@@ -26,6 +28,9 @@ class ProjectsController extends Controller
 
     public function show(Projects $project)
     {
+        if(auth()->id() !== (int) $project->owner_id) {
+            abort(403);
+        }
         return view('projects.show', compact('project'));
     }
 }
