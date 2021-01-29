@@ -16,8 +16,8 @@ class Projects extends Model
         return route('projects.show', $this);
     }
 
-//    public function owner()
-//    {
-//        return $this->belongsTo(User::class);
-//    }
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
