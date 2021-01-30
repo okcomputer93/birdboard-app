@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer utilities {
+    .shadow-light {
+        box-shadow: 0 0 5px 0 rgba(0,0,0,0.08);
+    }
+}
+
+@layer components {
+    .button-blue {
+        @apply bg-blue-primary text-white no-underline rounded-lg text-sm py-2 px-5;
+        box-shadow: 0 2px 7px 0 #b0eaff;
+    }
+}
+
+@layer components {
+    .card {
+        @apply bg-white p-5 rounded-lg shadow-light;
+    }
+}

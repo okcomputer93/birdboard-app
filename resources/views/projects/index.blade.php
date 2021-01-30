@@ -1,22 +1,18 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>I'm an ugly view</title>
-</head>
-<body>
-    <h1>Birdboard</h1>
-    <ul>
+@extends ('layouts.app')
+@section('content')
+    <header class="flex items-end justify-between mb-3 py-4">
+        <h2 class="text-grey-font text-sm font-normal">My Projects</h2>
+        <a class="button-blue" href="/projects/create">New Project</a>
+    </header>
+
+    <main class="lg:flex lg:flex-wrap -mx-3">
         @forelse($projects as $project)
-            <li>
-                <a href="{{ $project->path() }}">{{ $project->title }}</a>
-            </li>
+            <div class="lg:w-1/3 px-3 pb-6">
+                @include('projects.card')
+            </div>
         @empty
-            <li>No projects yet.</li>
+            <div>No projects yet.</div>
         @endforelse
-    </ul>
-</body>
-</html>
+    </main>
+
+@endsection

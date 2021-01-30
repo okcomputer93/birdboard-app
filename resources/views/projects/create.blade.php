@@ -1,15 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <title>Single project ugly view :p</title>
-</head>
-<body>
-    <form method="POST" action="/projects" class="container pt-6" >
+@extends('layouts.app')
+@section('content')
+    <form method="POST" action="/projects" >
         @csrf
         <h1 class="heading is-1">Create a Project</h1>
         <div class="field">
@@ -31,8 +22,8 @@
         <div class="field">
             <div class="control">
                 <button class="button is-link" type="submit">Create Project</button>
+                <a href="/projects">Cancel</a>
             </div>
         </div>
     </form>
-</body>
-</html>
+@endsection

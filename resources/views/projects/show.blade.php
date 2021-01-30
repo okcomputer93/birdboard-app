@@ -1,14 +1,33 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Single project ugly view :p</title>
-</head>
-<body>
-    <h1>{{ $project->title }}</h1>
-    <p>{{ $project->description }}</p>
-</body>
-</html>
+@extends('layouts.app')
+@section('content')
+    <header class="flex items-end justify-between mb-3 py-4">
+        <p class="text-grey-font text-sm font-normal">
+            <a class="text-grey-font text-sm font-normal no-underline" href="/projects">My Projects</a> / {{ $project->title }}
+        </p>
+        <a class="button-blue" href="/projects/create">New Project</a>
+    </header>
+
+    <main>
+        <div class="lg:flex -m-3">
+            <div class="lg:w-3/4 px-3 mb-6">
+                <div class="mb-8">
+                    <h2 class="text-grey-font text-lg font-normal mb-3">Tasks</h2>
+    {{--                tasks--}}
+                    <div class="card mb-3">Lorem Ipsum.</div>
+                    <div class="card mb-3">Lorem Ipsum.</div>
+                    <div class="card mb-3">Lorem Ipsum.</div>
+                    <div class="card">Lorem Ipsum.</div>
+                </div>
+
+                <div>
+                    <label for="notes" class="block text-grey-font text-lg font-normal mb-3">General Notes</label>
+    {{--                General notes--}}
+                    <textarea id="notes" rows="10" class="w-full card mb-3">Lorem Ipsum.</textarea>
+                </div>
+            </div>
+            <div class="lg:w-1/4 px-3">
+                @include('projects.card')
+            </div>
+        </div>
+    </main>
+@endsection
