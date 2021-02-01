@@ -13,7 +13,11 @@
                 <div class="mb-8">
                     <h2 class="text-grey-font text-lg font-normal mb-3">Tasks</h2>
     {{--                tasks--}}
-                    <div class="card mb-3">Lorem Ipsum.</div>
+                    @forelse($project->tasks as $task)
+                        <div class="card mb-3">{{ $task->body }}</div>
+                    @empty
+                        Wow such empty!
+                    @endforelse
                     <div class="card mb-3">Lorem Ipsum.</div>
                     <div class="card mb-3">Lorem Ipsum.</div>
                     <div class="card">Lorem Ipsum.</div>
