@@ -11,18 +11,19 @@
         <div class="lg:flex -m-3">
             <div class="lg:w-3/4 px-3 mb-6">
                 <div class="mb-8">
-                    <h2 class="text-grey-font text-lg font-normal mb-3">Tasks</h2>
+                    <label for="body" class="inline-block text-grey-font text-lg font-normal mb-3">Tasks</label>
     {{--                tasks--}}
-                    @forelse($project->tasks as $task)
+                    @foreach($project->tasks as $task)
                         <div class="card mb-3">{{ $task->body }}</div>
-                    @empty
-                        Wow such empty!
-                    @endforelse
-                    <div class="card mb-3">Lorem Ipsum.</div>
-                    <div class="card mb-3">Lorem Ipsum.</div>
-                    <div class="card">Lorem Ipsum.</div>
+                    @endforeach
+                    <div class="card mb-3">
+                        <form method="post" action="{{ $project->path() . '/tasks' }}">
+                            @method("POST")
+                            @csrf
+                            <input class="w-full" name="body" id="body" placeholder="Add a new task...">
+                        </form>
+                    </div>
                 </div>
-
                 <div>
                     <label for="notes" class="block text-grey-font text-lg font-normal mb-3">General Notes</label>
     {{--                General notes--}}
