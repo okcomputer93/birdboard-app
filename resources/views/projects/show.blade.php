@@ -14,7 +14,16 @@
                     <label for="body" class="inline-block text-grey-font text-lg font-normal mb-3">Tasks</label>
     {{--                tasks--}}
                     @foreach($project->tasks as $task)
-                        <div class="card mb-3">{{ $task->body }}</div>
+                        <div class="card mb-3">
+                            <form method="post" action="{{ $task->path() }}">
+                                @method("PATCH")
+                                @csrf
+                                <div class="flex">
+                                    <input name="body" class="w-full {{ $task->completed ? 'text-grey-font' : '' }}" value="{{ $task->body }}">
+                                    <input {{ $task->completed ? 'checked' : '' }} type="checkbox" name="completed" id="completed" onchange="this.form.submit()">
+                                </div>
+                            </form>
+                        </div>
                     @endforeach
                     <div class="card mb-3">
                         <form method="post" action="{{ $project->path() . '/tasks' }}">

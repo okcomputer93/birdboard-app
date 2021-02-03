@@ -12,6 +12,7 @@ use Tests\TestCase;
 class ProjectTasksTest extends TestCase
 {
    use RefreshDatabase;
+
     /** @test */
     public function only_the_owner_of_a_project_may_add_tasks()
     {
@@ -22,6 +23,39 @@ class ProjectTasksTest extends TestCase
         $this->assertDatabaseMissing('tasks', ['body' => 'Test task']);
 
     }
+
+    /** @test */
+    public function only_the_owner_of_a_project_may_update_a_task()
+    {
+        $this->signIn();
+        $project = Projects::factory()->create();
+        $task = $project->addTask('test task');
+        $this->patch($task->path(), ['body' => 'changed'])
+            ->assertStatus(403);
+        $this->assertDatabaseMissing('tasks', ['body' => 'changed']);
+
+    }
+
+
+    /** @test */
+    public function a_task_can_be_updated()
+    {
+        $this->withoutExceptionHandling();
+        $this->signIn();
+        $project = Projects::factory()->create([
+            'owner_id' => auth()->id()
+        ]);
+        $task = $project->addTask("test task");
+        $this->patch($task->path(),
+            ['body' => 'changed task',
+             'completed' => true
+        ]);
+        $this->assertDatabaseHas('tasks',
+            ['body' => 'changed task',
+            'completed' => true
+        ]);
+    }
+
 
    /** @test */
    public function a_project_can_have_tasks()
