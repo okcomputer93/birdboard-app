@@ -36,7 +36,18 @@
                 <div>
                     <label for="notes" class="block text-grey-font text-lg font-normal mb-3">General Notes</label>
     {{--                General notes--}}
-                    <textarea id="notes" rows="10" class="w-full card mb-3">Lorem Ipsum.</textarea>
+                    <form method="post" action="{{ $project->path() }}">
+                        @csrf
+                        @method('PATCH')
+                        <textarea
+                            name="notes"
+                            id="notes"
+                            rows="10"
+                            class="w-full card mb-4"
+                            placeholder="Anything special that you want to make a note of?"
+                        >{{ $project->notes }}</textarea>
+                        <button type="submit" class="button-blue">Save</button>
+                    </form>
                 </div>
             </div>
             <div class="lg:w-1/4 px-3">

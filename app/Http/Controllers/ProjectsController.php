@@ -21,16 +21,26 @@ class ProjectsController extends Controller
             ->create(\request()->validate([
                 'title' => 'required',
                 'description' => 'required',
+                'notes' => 'min:3'
         ]));
 
         return redirect($project->path());
     }
 
+    public function update(Projects $project)
+    {
+        $this->authorize('update', $project);
+
+        $project->update(request(['notes']));
+
+        return redirect($project->path());
+
+    }
+
     public function show(Projects $project)
     {
-        if(auth()->user()->isNot($project->owner)) {
-            abort(403);
-        }
+        $this->authorize('update', $project);
+
         return view('projects.show', compact('project'));
     }
 

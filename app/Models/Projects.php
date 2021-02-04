@@ -9,7 +9,7 @@ class Projects extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'owner_id'];
+    protected $fillable = ['title', 'description', 'owner_id', 'notes'];
 
     public function path()
     {
