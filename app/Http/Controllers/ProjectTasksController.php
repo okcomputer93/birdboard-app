@@ -11,7 +11,7 @@ class ProjectTasksController extends Controller
     public function store(Projects $project)
     {
         $this->authorize('update', $project);
-        
+
         \request()->validate([
             'body' => 'required'
         ]);
