@@ -4,6 +4,20 @@ use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ProjectTasksController;
 use Illuminate\Support\Facades\Route;
 
+\App\Models\Projects::created(function ($project) {
+    App\Models\Activity::create([
+       'project_id' => $project->id,
+        'description' => 'created'
+    ]);
+});
+
+\App\Models\Projects::updated(function ($project) {
+    App\Models\Activity::create([
+        'project_id' => $project->id,
+        'description' => 'updated'
+        ]);
+    });
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
