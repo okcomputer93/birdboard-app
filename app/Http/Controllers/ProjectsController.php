@@ -54,8 +54,8 @@ class ProjectsController extends Controller
     {
         return request()
             ->validate([
-                'title' => 'required',
-                'description' => 'required',
+                'title' => 'sometimes|required',
+                'description' => 'sometimes|required',
                 'notes' => 'min:3'
             ]);
     }

@@ -25,13 +25,11 @@
                             </form>
                         </div>
                     @endforeach
-                    <div class="card mb-3">
-                        <form method="post" action="{{ $project->path() . '/tasks' }}">
-                            @method("POST")
-                            @csrf
-                            <input class="w-full" name="body" id="body" placeholder="Add a new task...">
-                        </form>
-                    </div>
+                    <form method="post" action="{{ $project->path() . '/tasks' }}">
+                        @method("POST")
+                        @csrf
+                        <input class="border-solid border-2 focus:outline-none rounded focus:border-blue-light card mb-3 w-full" name="body" id="body" placeholder="Add a new task...">
+                    </form>
                 </div>
                 <div>
                     <label for="notes" class="block text-grey-font text-lg font-normal mb-3">General Notes</label>
@@ -43,11 +41,18 @@
                             name="notes"
                             id="notes"
                             rows="10"
-                            class="w-full card mb-4"
+                            class="border-solid border-2 focus:outline-none rounded focus:border-blue-light w-full card mb-4"
                             placeholder="Anything special that you want to make a note of?"
                         >{{ $project->notes }}</textarea>
                         <button type="submit" class="button-blue">Save</button>
                     </form>
+                    @if($errors->any())
+                        <div class="field mt-6">
+                            @foreach($errors->all() as $error)
+                                <li class="text-sm text-red-700">{{ $error }}</li>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="lg:w-1/4 px-3 lg:mt-10">
