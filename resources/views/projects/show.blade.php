@@ -4,7 +4,7 @@
         <p class="text-grey-font text-sm font-normal">
             <a class="text-grey-font text-sm font-normal no-underline" href="/projects">My Projects</a> / {{ $project->title }}
         </p>
-        <a class="button-blue" href="/projects/create">New Project</a>
+        <a class="button-blue" href="{{ $project->path() . '/edit' }}">Edit Project</a>
     </header>
 
     <main>
@@ -50,7 +50,7 @@
                     </form>
                 </div>
             </div>
-            <div class="lg:w-1/4 px-3">
+            <div class="lg:w-1/4 px-3 lg:mt-10">
                 @include('projects.card')
             </div>
         </div>
