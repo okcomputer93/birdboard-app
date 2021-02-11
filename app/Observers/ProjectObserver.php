@@ -15,10 +15,7 @@ class ProjectObserver
      */
     public function created(Projects $project)
     {
-        Activity::create([
-            'project_id' => $project->id,
-            'description' => 'created'
-        ]);
+        $this->recordActivity($project, 'created');
     }
 
     /**
@@ -29,42 +26,14 @@ class ProjectObserver
      */
     public function updated(Projects $project)
     {
+        $this->recordActivity($project, 'updated');
+    }
+
+    protected function recordActivity($project, $type)
+    {
         Activity::create([
             'project_id' => $project->id,
-            'description' => 'updated'
+            'description' => $type
         ]);
-    }
-
-    /**
-     * Handle the Projects "deleted" event.
-     *
-     * @param  \App\Models\Projects  $project
-     * @return void
-     */
-    public function deleted(Projects $project)
-    {
-        //
-    }
-
-    /**
-     * Handle the Projects "restored" event.
-     *
-     * @param  \App\Models\Projects  $project
-     * @return void
-     */
-    public function restored(Projects $project)
-    {
-        //
-    }
-
-    /**
-     * Handle the Projects "force deleted" event.
-     *
-     * @param  \App\Models\Projects  $project
-     * @return void
-     */
-    public function forceDeleted(Projects $project)
-    {
-        //
     }
 }
