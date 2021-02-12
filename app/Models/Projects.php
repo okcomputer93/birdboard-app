@@ -39,6 +39,6 @@ class Projects extends Model
 
     public function activity()
     {
-        return $this->hasMany(Activity::class, 'project_id');
+        return $this->hasMany(Activity::class, 'project_id')->latest();
     }
 }
