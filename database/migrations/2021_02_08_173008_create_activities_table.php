@@ -20,6 +20,7 @@ class CreateActivitiesTable extends Migration
 //            $table->unsignedBigInteger('subject_id');  id: 9
 //            $table->string('subject_type');  App\Models\Task
             $table->string('description');
+            $table->text('changes')->nullable();
             $table->timestamps();
         });
     }
