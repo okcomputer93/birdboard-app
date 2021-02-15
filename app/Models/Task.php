@@ -17,6 +17,8 @@ class Task extends Model
 
     protected $casts = ['completed' => 'boolean'];
 
+    protected static $recordableEvents = ['created', 'deleted'];
+
     public function complete()
     {
         $this->update(['completed' => true]);
