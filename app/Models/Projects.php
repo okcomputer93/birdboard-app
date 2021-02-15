@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DateTimeInterface;
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,11 +45,18 @@ class Projects extends Model
     {
         $this->activity()->create([
             'description' => $description,
-            'changes' => [
-                'before' => array_diff($this->old, $this->getAttributes()),
-                'after' => array_diff($this->getAttributes(), $this->old)
-            ]
+            'changes' =>  $this->activityChanges($description),
         ]);
+    }
+
+    public function activityChanges($description)
+    {
+        if ($description === 'updated') {
+            return  [
+                'before' => Arr::except(array_diff($this->old, $this->getAttributes()), 'updated_at'),
+                'after' => Arr::except($this->getChanges(), 'updated_at')
+            ];
+        }
     }
 
     public function activity()
