@@ -40,7 +40,10 @@ trait RecordsActivity
     public function recordActivity($description)
     {
         $this->activity()->create([
-            'user_id' => auth()->id(),
+            // Some test doesn't have an auth user:
+            // task ?? project
+            // A task has a project relationship, a project does not.
+            'user_id' => ($this->project ?? $this)->owner->id,
             'description' => $description,
             'changes' => $this->activityChanges(),
             'project_id' => class_basename($this) === 'Projects' ? $this->id : $this->projects_id,
