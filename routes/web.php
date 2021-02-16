@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('/projects/{project}/tasks', [ProjectTasksController::class, 'store']);
     Route::patch('/projects/{project}/tasks/{task}', [ProjectTasksController::class, 'update']);
     Route::post('/projects', [ProjectsController::class, 'store']);
+    Route::delete('/projects/{project}', [ProjectsController::class, 'destroy']);
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
