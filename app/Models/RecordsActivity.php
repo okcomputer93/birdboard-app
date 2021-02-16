@@ -24,10 +24,7 @@ trait RecordsActivity
     }
 
     protected function activityDescription($description) {
-        if (class_basename($this) !== 'Projects') {
-            return "{$description}_" . strtolower(class_basename($this));
-        }
-        return $description;
+        return "{$description}_" . strtolower(class_basename($this));
     }
 
 
