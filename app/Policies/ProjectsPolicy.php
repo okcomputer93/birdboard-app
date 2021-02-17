@@ -13,6 +13,6 @@ class ProjectsPolicy
 
     public function update(User $user, Projects $project)
     {
-         return $user->is($project->owner);
+         return $user->is($project->owner) || $project->members->contains($user);
     }
 }
