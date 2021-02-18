@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @method static whereEmail(array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Request|string|null $request)
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
