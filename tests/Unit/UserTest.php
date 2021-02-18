@@ -24,22 +24,19 @@ class UserTest extends TestCase
    {
        $jon = $this->signIn();
 
-       $project = ProjectFactory::ownedBy($jon)->create();
+       ProjectFactory::ownedBy($jon)->create();
 
        $this->assertCount(1, $jon->accessibleProjects());
 
        $sally = User::factory()->create();
        $nick = User::factory()->create();
 
-       $sallyProject = ProjectFactory::ownedBy($sally)->create();
-       $sallyProject->invite($nick);
+       $project = tap(ProjectFactory::ownedBy($sally)->create())->invite($nick);
 
        $this->assertCount(1, $jon->accessibleProjects());
 
-       $sallyProject->invite($jon);
+       $project->invite($jon);
        $this->assertCount(2, $jon->accessibleProjects());
-
-
    }
 
 
