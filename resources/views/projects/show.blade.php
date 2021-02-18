@@ -1,10 +1,28 @@
 @extends('layouts.app')
 @section('content')
-    <header class="flex items-end justify-between mb-3 py-4">
-        <p class="text-grey-font text-sm font-normal">
-            <a class="text-grey-font text-sm font-normal no-underline" href="/projects">My Projects</a> / {{ $project->title }}
-        </p>
-        <a class="button-blue" href="{{ $project->path() . '/edit' }}">Edit Project</a>
+    <header class="flex items-center mb-3 pb-4">
+        <div class="flex justify-between items-end w-full">
+            <p class="text-grey-font text-sm font-normal self-center">
+                <a class="text-grey-font text-sm font-normal no-underline hover:underline" href="/projects">My Projects</a> / {{ $project->title }}
+            </p>
+
+            <div class="flex items-center">
+                @foreach ($project->members as $member)
+                    <img
+                        src="{{ gravatar_url($member->email) }}"
+                        alt="{{ $member->name }}'s avatar"
+                        class="rounded-full w-8 mr-2">
+                @endforeach
+
+                    <img
+                        src="{{ gravatar_url($project->owner->name) }}"
+                        alt="{{ $project->owner->name }}'s avatar"
+                        class="rounded-full w-8 mr-2">
+
+
+                    <a class="button-blue ml-6" href="{{ $project->path() . '/edit' }}">Edit Project</a>
+            </div>
+        </div>
     </header>
 
     <main>
