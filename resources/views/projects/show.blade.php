@@ -48,6 +48,9 @@
                         @csrf
                         <input class="border-solid border-2 focus:outline-none rounded focus:border-blue-light card mb-3 w-full" name="body" id="body" placeholder="Add a new task...">
                     </form>
+                    @error('body')
+                        <li class="text-sm text-red-700 list-none">{{ $message }}</li>
+                    @enderror
                 </div>
                 <div>
                     <label for="notes" class="block text-grey-font text-lg font-normal mb-3">General Notes</label>
@@ -64,18 +67,17 @@
                         >{{ $project->notes }}</textarea>
                         <button type="submit" class="button-blue">Save</button>
                     </form>
-                    @if($errors->any())
-                        <div class="field mt-6">
-                            @foreach($errors->all() as $error)
-                                <li class="text-sm text-red-700">{{ $error }}</li>
-                            @endforeach
-                        </div>
-                    @endif
+                    @error('notes')
+                      <li class="text-sm text-red-700 pt-3 list-none">{{ $message }}</li>
+                    @enderror
                 </div>
             </div>
             <div class="lg:w-1/4 px-3 lg:mt-10">
                 @include('projects.card')
                 @include('projects.activity.card')
+                @can('manage', $project)
+                    @include('projects.invite')
+                @endcan
             </div>
         </div>
     </main>
