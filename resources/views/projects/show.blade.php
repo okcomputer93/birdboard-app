@@ -2,8 +2,8 @@
 @section('content')
     <header class="flex items-center mb-3 pb-4">
         <div class="flex justify-between items-end w-full">
-            <p class="text-grey-font text-sm font-normal self-center">
-                <a class="text-grey-font text-sm font-normal no-underline hover:underline" href="/projects">My Projects</a> / {{ $project->title }}
+            <p class="text-muted text-sm font-normal self-center">
+                <a class="text-muted text-sm font-normal no-underline hover:underline" href="/projects">My Projects</a> / {{ $project->title }}
             </p>
 
             <div class="flex items-center">
@@ -29,7 +29,7 @@
         <div class="lg:flex -m-3">
             <div class="lg:w-3/4 px-3 mb-6">
                 <div class="mb-8">
-                    <label for="body" class="inline-block text-grey-font text-lg font-normal mb-3">Tasks</label>
+                    <label for="body" class="inline-block text-muted text-lg font-normal mb-3">Tasks</label>
     {{--                tasks--}}
                     @foreach($project->tasks as $task)
                         <div class="card mb-3">
@@ -37,7 +37,7 @@
                                 @method("PATCH")
                                 @csrf
                                 <div class="flex">
-                                    <input name="body" class="w-full {{ $task->completed ? 'text-grey-font' : '' }}" value="{{ $task->body }}">
+                                    <input name="body" class="w-full bg-card text-default {{ $task->completed ? 'line-through text-muted' : '' }}" value="{{ $task->body }}">
                                     <input {{ $task->completed ? 'checked' : '' }} type="checkbox" name="completed" id="completed" onchange="this.form.submit()">
                                 </div>
                             </form>
@@ -46,14 +46,14 @@
                     <form method="post" action="{{ $project->path() . '/tasks' }}">
                         @method("POST")
                         @csrf
-                        <input class="border-solid border-2 focus:outline-none rounded focus:border-blue-light card mb-3 w-full" name="body" id="body" placeholder="Add a new task...">
+                        <input class="bg-card text-default focus:outline-none border-solid border-2 border-border focus:border-border-focus rounded card mb-3 w-full" name="body" id="body" placeholder="Add a new task...">
                     </form>
                     @error('body')
                         <li class="text-sm text-red-700 list-none">{{ $message }}</li>
                     @enderror
                 </div>
                 <div>
-                    <label for="notes" class="block text-grey-font text-lg font-normal mb-3">General Notes</label>
+                    <label for="notes" class="block text-muted text-lg font-normal mb-3">General Notes</label>
     {{--                General notes--}}
                     <form method="post" action="{{ $project->path() }}">
                         @csrf
@@ -62,7 +62,7 @@
                             name="notes"
                             id="notes"
                             rows="10"
-                            class="border-solid border-2 focus:outline-none rounded focus:border-blue-light w-full card mb-4"
+                            class="border-solid border-2 focus:outline-none border-border focus:border-border-focus rounded w-full card mb-4"
                             placeholder="Anything special that you want to make a note of?"
                         >{{ $project->notes }}</textarea>
                         <button type="submit" class="button-blue">Save</button>

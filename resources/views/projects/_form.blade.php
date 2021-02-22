@@ -3,7 +3,7 @@
         <label for="title" class="text-xl">Title</label>
         <div class="mb-10 mt-2">
             <input type="text"
-                   class="border-solid border-2 border-grey-light focus:outline-none rounded focus:border-blue-light w-full p-2 text-sm"
+                   class="border-solid border-2 focus:outline-none border-border focus:border-border-focus rounded card w-full p-2 text-sm"
                    id="title"
                    name="title"
                    placeholder="My next awesome project"
@@ -22,7 +22,7 @@
         <div class="mb-10 mt-2">
             <textarea
                     rows="10"
-                    class="border-solid border-2 border-grey-light focus:outline-none rounded focus:border-blue-light p-2 w-full text-sm"
+                    class="border-solid border-2 focus:outline-none border-border focus:border-border-focus rounded card focus:border-blue-light p-2 w-full text-sm"
                     id="description"
                     name="description"
                     required

@@ -1,7 +1,7 @@
 @extends ('layouts.app')
 @section('content')
     <header class="flex items-end justify-between mb-3 py-4">
-        <h2 class="text-grey-font text-sm font-normal">My Projects</h2>
+        <h2 class="text-muted text-sm font-normal">My Projects</h2>
         <a class="button-blue" href="/projects/create">New Project</a>
     </header>
 
