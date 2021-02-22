@@ -1,0 +1,4 @@
+.card {
+    @apply bg-card text-default p-5 rounded-lg shadow-light;
+}
+
