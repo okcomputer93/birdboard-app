@@ -4,4 +4,8 @@
     box-shadow: 0 1px 7px 0 var(--border-color-focus);
 }
 
+.button-blue.is-outlined {
+    @apply bg-card border border-accent text-accent;
+}
+
 

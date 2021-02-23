@@ -65,7 +65,6 @@
                                     <img width="35" class="rounded-full mr-3" src="{{ gravatar_url(auth()->user()->email) }}" alt="">
                                     {{ Auth::user()->name }}
                                 </a>
-                                </div>
                             @endguest
                         </div>
                     </div>
