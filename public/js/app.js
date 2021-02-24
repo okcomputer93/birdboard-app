@@ -1860,6 +1860,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _BirdboardForm_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BirdboardForm.js */ "./resources/js/components/BirdboardForm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1937,24 +1938,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "NewProject.vue",
   data: function data() {
     return {
-      form: {
+      form: new _BirdboardForm_js__WEBPACK_IMPORTED_MODULE_2__.default({
         title: '',
         description: '',
         tasks: [{
           body: ''
         }]
-      },
-      errors: {}
+      })
     };
   },
   methods: {
     addTask: function addTask() {
       this.form.tasks.push({
-        value: ''
+        body: ''
       });
     },
     submit: function submit() {
@@ -1968,7 +1969,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/projects', _this.form);
+                return _this.form.submit('/projects');
 
               case 3:
                 response = _context.sent;
@@ -1979,7 +1980,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _context.prev = 7;
                 _context.t0 = _context["catch"](0);
-                _this.errors = _context.t0.response.data.errors;
+                console.log('Ooops I did it again');
 
               case 10:
               case "end":
@@ -2081,6 +2082,123 @@ Vue.component('new-project', __webpack_require__(/*! ./components/NewProject.vue
 var app = new Vue({
   el: '#app'
 });
+
+/***/ }),
+
+/***/ "./resources/js/components/BirdboardForm.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/BirdboardForm.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => /* binding */ BirdboardForm
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var BirdboardForm = /*#__PURE__*/function () {
+  function BirdboardForm(data) {
+    _classCallCheck(this, BirdboardForm);
+
+    this.originalData = JSON.parse(JSON.stringify(data));
+    Object.assign(this, data);
+    this.errors = {};
+    this.submitted = false;
+  }
+
+  _createClass(BirdboardForm, [{
+    key: "data",
+    value: function data() {
+      var data = {};
+
+      for (var attribute in this.originalData) {
+        data[attribute] = this[attribute];
+      }
+
+      return data;
+    }
+  }, {
+    key: "submit",
+    value: function () {
+      var _submit = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(endpoint) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.t0 = this;
+                _context.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().post(endpoint, this.data());
+
+              case 4:
+                _context.t1 = _context.sent;
+
+                _context.t0.OnSuccess.call(_context.t0, _context.t1);
+
+                _context.next = 11;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t2 = _context["catch"](0);
+                this.onFail(_context.t2);
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 8]]);
+      }));
+
+      function submit(_x) {
+        return _submit.apply(this, arguments);
+      }
+
+      return submit;
+    }()
+  }, {
+    key: "onFail",
+    value: function onFail(error) {
+      this.submitted = false;
+      this.errors = error.response.data.errors;
+      throw error;
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      Object.assign(this, this.originalData);
+    }
+  }, {
+    key: "OnSuccess",
+    value: function OnSuccess(response) {
+      this.submitted = true;
+      return response;
+    }
+  }]);
+
+  return BirdboardForm;
+}();
+
+
 
 /***/ }),
 
@@ -3266,7 +3384,9 @@ var render = function() {
                     }
                   ],
                   staticClass: "border p-2 text-sm block w-full rounded",
-                  class: _vm.errors.title ? "border-error" : "border-muted",
+                  class: _vm.form.errors.title
+                    ? "border-error"
+                    : "border-muted",
                   attrs: { type: "text", name: "title", id: "title" },
                   domProps: { value: _vm.form.title },
                   on: {
@@ -3279,9 +3399,9 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _vm.errors.title
+                _vm.form.errors.title
                   ? _c("span", { staticClass: "text-sm italic text-error" }, [
-                      _vm._v(_vm._s(_vm.errors.title[0]))
+                      _vm._v(_vm._s(_vm.form.errors.title[0]))
                     ])
                   : _vm._e()
               ]),
@@ -3307,7 +3427,7 @@ var render = function() {
                   ],
                   staticClass:
                     "border border-muted p-2 text-sm block w-full rounded",
-                  class: _vm.errors.description
+                  class: _vm.form.errors.description
                     ? "border-error"
                     : "border-muted",
                   attrs: { name: "description", id: "description", rows: "7" },
@@ -3322,9 +3442,9 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _vm.errors.description
+                _vm.form.errors.description
                   ? _c("span", { staticClass: "text-sm italic text-error" }, [
-                      _vm._v(_vm._s(_vm.errors.description[0]))
+                      _vm._v(_vm._s(_vm.form.errors.description[0]))
                     ])
                   : _vm._e()
               ])

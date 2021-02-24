@@ -11,12 +11,12 @@
                             name="title"
                             id="title"
                             class="border p-2 text-sm block w-full rounded"
-                            :class="errors.title ? 'border-error' : 'border-muted'"
+                            :class="form.errors.title ? 'border-error' : 'border-muted'"
                             v-model="form.title">
                         <span
                             class="text-sm italic text-error"
-                            v-if="errors.title"
-                        >{{ errors.title[0] }}</span>
+                            v-if="form.errors.title"
+                        >{{ form.errors.title[0] }}</span>
                     </div>
 
                     <div class="mb-4">
@@ -25,14 +25,14 @@
                             name="description"
                             id="description"
                             class="border border-muted p-2 text-sm block w-full rounded"
-                            :class="errors.description ? 'border-error' : 'border-muted'"
+                            :class="form.errors.description ? 'border-error' : 'border-muted'"
                             rows="7"
                             v-model="form.description"
                         ></textarea>
                         <span
                             class="text-sm italic text-error"
-                            v-if="errors.description"
-                        >{{ errors.description[0] }}</span>
+                            v-if="form.errors.description"
+                        >{{ form.errors.description[0] }}</span>
                     </div>
                 </div>
                 <div class="flex-1 ml-4">
@@ -70,31 +70,31 @@
 
 <script>
     import axios from "axios";
+    import BirdboardForm from './BirdboardForm.js';
 
     export default {
         name: "NewProject.vue",
         data() {
             return {
-                form: {
+                form: new BirdboardForm({
                     title: '',
                     description: '',
                     tasks: [
                         { body: '' }
                     ]
-                },
-                errors: {},
+                }),
             }
         },
         methods: {
             addTask() {
-                this.form.tasks.push({ value: '' })
+                this.form.tasks.push({ body: '' })
             },
-            async submit() {
+             async submit() {
                 try {
-                    const response = await axios.post('/projects', this.form)
+                    const response = await this.form.submit('/projects');
                     location = response.data.message;
-                } catch (e) {
-                    this.errors = e.response.data.errors;
+                } catch (err) {
+                    console.log('Ooops I did it again')
                 }
             }
         }
