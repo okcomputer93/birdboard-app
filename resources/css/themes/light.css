@@ -12,5 +12,6 @@
     --text-muted-light-color: rgb(152, 152, 152);
     --text-accent-color: #47cdff;
     --text-accent-light-color: #e1e6e8;
+    --text-error-color: red;
     transition: all 0.5s;
 }
