@@ -29,6 +29,22 @@ class ManageProjectsTest extends TestCase
     }
 
     /** @test */
+    public function tasks_can_be_included_as_part_of_a_new_project_creation()
+    {
+        $this->signIn();
+        $attributes = Projects::factory()->raw();
+        $attributes['tasks'] = [
+            ['body' => 'Task 1'],
+            ['body' => 'Task 2'],
+        ];
+
+        $this->post('/projects', $attributes);
+
+        $this->assertCount(2, Projects::first()->tasks);
+    }
+
+
+    /** @test */
     public function an_user_can_see_all_projects_they_have_been_invited_to_on_their_dashboards()
     {
         $project = tap(ProjectFactory::create())->invite($this->signIn());
