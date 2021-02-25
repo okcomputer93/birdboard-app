@@ -1,6 +1,12 @@
 <template>
-    <modal name="new-project" classes="p-10 p-4 bg-card rounded-lg" height="auto">
-        <h1 class="font-normal text-2xl mb-16 text-center">Let's Start Something New</h1>
+    <modal
+        @closed="form.reset()"
+        name="new-project"
+        classes="p-10 p-4 card bg-card rounded-lg"
+        height="auto">
+        <h1
+            class="font-normal text-2xl mb-16 text-center"
+        >Let's Start Something New</h1>
         <form @submit.prevent="submit">
             <div class="flex">
                 <div class="flex-1 mr-4">
@@ -10,8 +16,8 @@
                             type="text"
                             name="title"
                             id="title"
-                            class="border p-2 text-sm block w-full rounded"
-                            :class="form.errors.title ? 'border-error' : 'border-muted'"
+                            class="border p-2 text-sm block w-full rounded bg-card border-solid border-2 focus:outline-none focus:border-border-focus"
+                            :class="form.errors.title && form.errors.title.length > 0 ? 'border-error' : 'border-border'"
                             v-model="form.title">
                         <span
                             class="text-sm italic text-error"
@@ -24,8 +30,8 @@
                         <textarea
                             name="description"
                             id="description"
-                            class="border border-muted p-2 text-sm block w-full rounded"
-                            :class="form.errors.description ? 'border-error' : 'border-muted'"
+                            class="border p-2 text-sm block w-full rounded bg-card border-solid border-2 focus:outline-none focus:border-border-focus"
+                            :class="form.errors.description && form.errors.description.length > 0 ? 'border-error' : 'border-border'"
                             rows="7"
                             v-model="form.description"
                         ></textarea>
@@ -41,7 +47,7 @@
                         <input
                             type="text"
                             name="title"
-                            class="border border-muted p-2 text-sm block w-full rounded mb-2"
+                            class="border p-2 text-sm block w-full rounded mb-2 bg-card border-solid border-2 focus:outline-none border-border focus:border-border-focus"
                             placeholder="Task 1"
                             v-for="task in form.tasks"
                             v-model="task.body">
@@ -61,17 +67,21 @@
             </div>
 
             <footer class="flex justify-end">
-                <button type="button" @click="$modal.hide('new-project')" class="button-blue is-outlined mr-4">Cancel</button>
-                <button class="button-blue">Create Project</button>
+                <button
+                    type="button"
+                    @click="$modal.hide('new-project'); form.reset();"
+                    class="button-blue is-outlined mr-4"
+                >Cancel</button>
+                <button
+                    class="button-blue"
+                >Create Project</button>
             </footer>
         </form>
     </modal>
 </template>
 
 <script>
-    import axios from "axios";
     import BirdboardForm from './BirdboardForm.js';
-
     export default {
         name: "NewProject.vue",
         data() {
@@ -81,20 +91,57 @@
                     description: '',
                     tasks: [
                         { body: '' }
-                    ]
+                    ],
+                    errors: {
+                        description: [],
+                        title: [],
+                    },
                 }),
             }
         },
+        watch: {
+            title() {
+                this.form.errors.title = [];
+            },
+            description() {
+                this.form.errors.description = [];
+            }
+        },
+        computed: {
+          title() {
+              return this.form.title;
+          },
+          description() {
+            return this.form.description;
+          }
+        },
         methods: {
+            checkForEmptyForm() {
+                if (this.form.title && this.form.description) {
+                    return;
+                }
+                if (!this.form.description) {
+                    this.form.errors.description.push('The description field is required.');
+                }
+                if (!this.form.title) {
+                    this.form.errors.title.push('The title field is required.');
+                }
+                throw new Error('Please fill the required fields');
+            },
             addTask() {
                 this.form.tasks.push({ body: '' })
             },
              async submit() {
                 try {
-                    const response = await this.form.submit('/projects');
+                    this.checkForEmptyForm();
+                    if (! this.form.tasks[0].body) {
+                        delete this.form.originalData.tasks;
+                    }
+                    const response = await this.form.post('/projects');
                     location = response.data.message;
+                    this.loading = true;
                 } catch (err) {
-                    console.log('Ooops I did it again')
+                    console.log(err);
                 }
             }
         }

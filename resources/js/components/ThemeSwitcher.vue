@@ -24,7 +24,6 @@ export default {
     },
     watch: {
         selectedTheme(newTheme, oldTheme) {
-            console.log(newTheme, oldTheme);
             document.body.classList.replace(oldTheme, newTheme);
             localStorage.setItem('theme', newTheme);
         }

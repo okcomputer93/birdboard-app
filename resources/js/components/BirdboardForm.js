@@ -4,23 +4,36 @@ export default class BirdboardForm {
     constructor(data) {
         this.originalData = JSON.parse(JSON.stringify(data));
         Object.assign(this, data);
-        this.errors = {};
         this.submitted = false;
     }
 
     data() {
-        let data = {};
-
-        for (let attribute in this.originalData) {
-            data[attribute] = this[attribute];
-        }
-
-        return data;
+        return Object.keys(this.originalData)
+            .reduce((data, attributes) => {
+                data[attributes] = this[attributes]
+                return data;
+            }, {});
     }
 
-    async submit(endpoint) {
+    async post(endpoint) {
+        return await this.submit(endpoint);
+    }
+
+    async patch(endpoint) {
+        return await this.submit(endpoint, 'patch');
+    }
+
+    async delete(endpoint) {
+        return await this.submit(endpoint, 'delete');
+    }
+
+    async get(endpoint) {
+        return await this.submit(endpoint, 'get');
+    }
+
+    async submit(endpoint, requestType = 'post') {
         try {
-            this.OnSuccess(await axios.post(endpoint, this.data()));
+            return this.OnSuccess(await axios[requestType](endpoint, this.data()));
         } catch (err) {
             this.onFail(err);
         }
@@ -28,16 +41,19 @@ export default class BirdboardForm {
 
     onFail(error) {
         this.submitted = false;
-        this.errors = error.response.data.errors;
+        this.errors = {...error.response.data.errors};
         throw error;
     }
 
     reset() {
         Object.assign(this, this.originalData);
+        this.errors.description = [];
+        this.errors.title = [];
     }
 
     OnSuccess(response) {
         this.submitted = true;
+        this.errors = {};
         return response;
     }
 }

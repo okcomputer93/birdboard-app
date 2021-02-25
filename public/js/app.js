@@ -1858,9 +1858,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _BirdboardForm_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BirdboardForm.js */ "./resources/js/components/BirdboardForm.js");
+/* harmony import */ var _BirdboardForm_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BirdboardForm.js */ "./resources/js/components/BirdboardForm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1937,22 +1935,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "NewProject.vue",
   data: function data() {
     return {
-      form: new _BirdboardForm_js__WEBPACK_IMPORTED_MODULE_2__.default({
+      form: new _BirdboardForm_js__WEBPACK_IMPORTED_MODULE_1__.default({
         title: '',
         description: '',
         tasks: [{
           body: ''
-        }]
+        }],
+        errors: {
+          description: [],
+          title: []
+        }
       })
     };
   },
+  watch: {
+    title: function title() {
+      this.form.errors.title = [];
+    },
+    description: function description() {
+      this.form.errors.description = [];
+    }
+  },
+  computed: {
+    title: function title() {
+      return this.form.title;
+    },
+    description: function description() {
+      return this.form.description;
+    }
+  },
   methods: {
+    checkForEmptyForm: function checkForEmptyForm() {
+      if (this.form.title && this.form.description) {
+        return;
+      }
+
+      if (!this.form.description) {
+        this.form.errors.description.push('The description field is required.');
+      }
+
+      if (!this.form.title) {
+        this.form.errors.title.push('The title field is required.');
+      }
+
+      throw new Error('Please fill the required fields');
+    },
     addTask: function addTask() {
       this.form.tasks.push({
         body: ''
@@ -1968,26 +2012,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                _context.next = 3;
-                return _this.form.submit('/projects');
 
-              case 3:
+                _this.checkForEmptyForm();
+
+                if (!_this.form.tasks[0].body) {
+                  delete _this.form.originalData.tasks;
+                }
+
+                _context.next = 5;
+                return _this.form.post('/projects');
+
+              case 5:
                 response = _context.sent;
                 location = response.data.message;
-                _context.next = 10;
+                _this.loading = true;
+                _context.next = 13;
                 break;
 
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
-                console.log('Ooops I did it again');
-
               case 10:
+                _context.prev = 10;
+                _context.t0 = _context["catch"](0);
+                console.log(_context.t0);
+
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 7]]);
+        }, _callee, null, [[0, 10]]);
       }))();
     }
   }
@@ -2031,7 +2083,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     selectedTheme: function selectedTheme(newTheme, oldTheme) {
-      console.log(newTheme, oldTheme);
       document.body.classList.replace(oldTheme, newTheme);
       localStorage.setItem('theme', newTheme);
     }
@@ -2102,6 +2153,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -2120,56 +2177,165 @@ var BirdboardForm = /*#__PURE__*/function () {
 
     this.originalData = JSON.parse(JSON.stringify(data));
     Object.assign(this, data);
-    this.errors = {};
     this.submitted = false;
   }
 
   _createClass(BirdboardForm, [{
     key: "data",
     value: function data() {
-      var data = {};
+      var _this = this;
 
-      for (var attribute in this.originalData) {
-        data[attribute] = this[attribute];
-      }
-
-      return data;
+      return Object.keys(this.originalData).reduce(function (data, attributes) {
+        data[attributes] = _this[attributes];
+        return data;
+      }, {});
     }
   }, {
-    key: "submit",
+    key: "post",
     value: function () {
-      var _submit = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(endpoint) {
+      var _post = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(endpoint) {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.t0 = this;
-                _context.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().post(endpoint, this.data());
+                _context.next = 2;
+                return this.submit(endpoint);
 
-              case 4:
-                _context.t1 = _context.sent;
+              case 2:
+                return _context.abrupt("return", _context.sent);
 
-                _context.t0.OnSuccess.call(_context.t0, _context.t1);
-
-                _context.next = 11;
-                break;
-
-              case 8:
-                _context.prev = 8;
-                _context.t2 = _context["catch"](0);
-                this.onFail(_context.t2);
-
-              case 11:
+              case 3:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 8]]);
+        }, _callee, this);
       }));
 
-      function submit(_x) {
+      function post(_x) {
+        return _post.apply(this, arguments);
+      }
+
+      return post;
+    }()
+  }, {
+    key: "patch",
+    value: function () {
+      var _patch = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(endpoint) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.submit(endpoint, 'patch');
+
+              case 2:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function patch(_x2) {
+        return _patch.apply(this, arguments);
+      }
+
+      return patch;
+    }()
+  }, {
+    key: "delete",
+    value: function () {
+      var _delete2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(endpoint) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.submit(endpoint, 'delete');
+
+              case 2:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function _delete(_x3) {
+        return _delete2.apply(this, arguments);
+      }
+
+      return _delete;
+    }()
+  }, {
+    key: "get",
+    value: function () {
+      var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(endpoint) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.submit(endpoint, 'get');
+
+              case 2:
+                return _context4.abrupt("return", _context4.sent);
+
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function get(_x4) {
+        return _get.apply(this, arguments);
+      }
+
+      return get;
+    }()
+  }, {
+    key: "submit",
+    value: function () {
+      var _submit = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(endpoint) {
+        var requestType,
+            _args5 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                requestType = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : 'post';
+                _context5.prev = 1;
+                _context5.t0 = this;
+                _context5.next = 5;
+                return (axios__WEBPACK_IMPORTED_MODULE_1___default())[requestType](endpoint, this.data());
+
+              case 5:
+                _context5.t1 = _context5.sent;
+                return _context5.abrupt("return", _context5.t0.OnSuccess.call(_context5.t0, _context5.t1));
+
+              case 9:
+                _context5.prev = 9;
+                _context5.t2 = _context5["catch"](1);
+                this.onFail(_context5.t2);
+
+              case 12:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this, [[1, 9]]);
+      }));
+
+      function submit(_x5) {
         return _submit.apply(this, arguments);
       }
 
@@ -2179,18 +2345,21 @@ var BirdboardForm = /*#__PURE__*/function () {
     key: "onFail",
     value: function onFail(error) {
       this.submitted = false;
-      this.errors = error.response.data.errors;
+      this.errors = _objectSpread({}, error.response.data.errors);
       throw error;
     }
   }, {
     key: "reset",
     value: function reset() {
       Object.assign(this, this.originalData);
+      this.errors.description = [];
+      this.errors.title = [];
     }
   }, {
     key: "OnSuccess",
     value: function OnSuccess(response) {
       this.submitted = true;
+      this.errors = {};
       return response;
     }
   }]);
@@ -3342,8 +3511,13 @@ var render = function() {
     {
       attrs: {
         name: "new-project",
-        classes: "p-10 p-4 bg-card rounded-lg",
+        classes: "p-10 p-4 card bg-card rounded-lg",
         height: "auto"
+      },
+      on: {
+        closed: function($event) {
+          return _vm.form.reset()
+        }
       }
     },
     [
@@ -3383,10 +3557,12 @@ var render = function() {
                       expression: "form.title"
                     }
                   ],
-                  staticClass: "border p-2 text-sm block w-full rounded",
-                  class: _vm.form.errors.title
-                    ? "border-error"
-                    : "border-muted",
+                  staticClass:
+                    "border p-2 text-sm block w-full rounded bg-card border-solid border-2 focus:outline-none focus:border-border-focus",
+                  class:
+                    _vm.form.errors.title && _vm.form.errors.title.length > 0
+                      ? "border-error"
+                      : "border-border",
                   attrs: { type: "text", name: "title", id: "title" },
                   domProps: { value: _vm.form.title },
                   on: {
@@ -3426,10 +3602,12 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "border border-muted p-2 text-sm block w-full rounded",
-                  class: _vm.form.errors.description
-                    ? "border-error"
-                    : "border-muted",
+                    "border p-2 text-sm block w-full rounded bg-card border-solid border-2 focus:outline-none focus:border-border-focus",
+                  class:
+                    _vm.form.errors.description &&
+                    _vm.form.errors.description.length > 0
+                      ? "border-error"
+                      : "border-border",
                   attrs: { name: "description", id: "description", rows: "7" },
                   domProps: { value: _vm.form.description },
                   on: {
@@ -3470,7 +3648,7 @@ var render = function() {
                         }
                       ],
                       staticClass:
-                        "border border-muted p-2 text-sm block w-full rounded mb-2",
+                        "border p-2 text-sm block w-full rounded mb-2 bg-card border-solid border-2 focus:outline-none border-border focus:border-border-focus",
                       attrs: {
                         type: "text",
                         name: "title",
@@ -3556,7 +3734,8 @@ var render = function() {
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
-                    return _vm.$modal.hide("new-project")
+                    _vm.$modal.hide("new-project")
+                    _vm.form.reset()
                   }
                 }
               },
