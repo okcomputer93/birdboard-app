@@ -6,5 +6,6 @@
 @import "./themes/light.css";
 @import "./components/card.css";
 @import "./components/button.css";
+@import "./components/dropdown.css";
 @import "./utilities/shadow.css";
 
