@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProjectInvitationsController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ProjectTasksController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::group(['middleware' => 'auth'], function (){
     Route::resource('projects', ProjectsController::class);
 
@@ -22,12 +28,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::patch('/projects/{project}/tasks/{task}', [ProjectTasksController::class, 'update']);
 
     Route::post('/projects/{project}/invitations', [ProjectInvitationsController::class, 'store']);
-
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
-
-
-
 
 Auth::routes();
 

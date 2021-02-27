@@ -43,19 +43,19 @@
                     </h1>
                     <div>
                         <!-- Right Side Of Navbar -->
-                        <div class="flex items-center ml-auto">
+                        <div class="flex items-center ml-auto text-default">
+                            <theme-switcher></theme-switcher>
+
                             <!-- Authentication Links -->
                             @guest
                                 @if (Route::has('login'))
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link mr-4" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 @endif
 
                                 @if (Route::has('register'))
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 @endif
                             @else
-                                <theme-switcher></theme-switcher>
-
                                 <dropdown align="right" width="200px">
                                     <template #trigger>
                                         <button

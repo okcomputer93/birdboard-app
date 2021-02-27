@@ -1,5 +1,5 @@
 .dropdown-menu-link {
-    @apply block text-default no-underline hover:bg-gray-200 text-sm leading-loose px-4;
+    @apply block text-default no-underline hover:bg-muted hover:text-border text-sm leading-loose px-4;
 }
 
 .dropdown-toggle > button:focus {
